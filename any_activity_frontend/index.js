@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
             long = position.coords.longitude
             lat = position.coords.latitude
 
-            let weatherURL = BASE_URL + `/${lat}/${long}`
+            let weatherURL = BASE_URL + `/weather/${lat}/${long}`
             fetch(weatherURL)
                 .then(response => console.log(response))
         })
