@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let lat; 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
-            long = position.coords.longitude
-            lat = position.coords.latitude
+            long = position.coords.longitude.replace('.','x')
+            lat = position.coords.latitude.replace('.','x')
 
             let weatherURL = BASE_URL + `/weather/${lat}/${long}`
             fetch(weatherURL)

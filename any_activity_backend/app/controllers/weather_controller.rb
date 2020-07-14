@@ -2,8 +2,8 @@ class WeatherController < ApplicationController
 
     def show 
         @key = ENV['OW_KEY']
-        @lat = params[:lat]
-        @long = params[:long]
+        @lat = params[:lat].gsub('x','.')
+        @long = params[:long].gsub('x','.')
         weather = get_weather
         render json: weather
     end
