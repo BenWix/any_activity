@@ -11,11 +11,9 @@ class WeatherController < ApplicationController
     private 
 
     def get_weather
-        weather_url = "api.openweathermap.org/data/2.5/weather?lat=#{@lat}&lon=#{@long}&appid=#{@key}"
-    
-        uri = uri.parse(weather_url)
-        response = Net::HTTP.get_response(uri)
-        
-    
+        weather_url = "https://api.openweathermap.org/data/2.5/weather?lat=#{@lat}&lon=#{@long}&appid=#{@key}"
+        uri = URI(weather_url)
+        response = HTTParty.get(weather_url)
+        response.parsed_response
     end
 end

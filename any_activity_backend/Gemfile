@@ -33,6 +33,7 @@ gem 'dotenv-rails'
 gem 'rack-cors'
 # gem 'open-uri'
 # gem 'net/http'
+gem 'httparty'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
