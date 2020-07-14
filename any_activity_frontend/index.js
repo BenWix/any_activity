@@ -8,7 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
             long = position.coords.longitude
             lat = position.coords.latitude
 
-            console.log(`${lat}, ${long}`)
+            let weatherURL = BASE_URL + `/${lat}/${long}`
+            fetch(weatherURL)
+                .then(response => console.log(response))
         })
     } else {
         console.log("Unable to determine location")
