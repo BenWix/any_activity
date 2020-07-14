@@ -1,6 +1,21 @@
 class WeatherController < ApplicationController
 
     def show 
-        render plain: "#{params[:lat]}, #{params[:long]}"
+        @key = ENV['OW_KEY']
+        @lat = params[:lat]
+        @long = params[:long]
+        weather = get_weather
+        render json: weather
+    end
+
+    private 
+
+    def get_weather
+        weather_url = "api.openweathermap.org/data/2.5/weather?lat=#{@lat}&lon=#{@long}&appid=#{@key}"
+    
+        uri = uri.parse(weather_url)
+        response = Net::HTTP.get_response(uri)
+        
+    
     end
 end
