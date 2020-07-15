@@ -1,6 +1,7 @@
 const BASE_URL = "http://localhost:3000"
 let currentWeather
 let newActivityDisplay = false
+let allActivityDisplay = false
 
 class Weather {
     constructor(json) {
@@ -87,6 +88,21 @@ function setNewActivityButton() {
     })
 }
 
+function setAllActivityButton() {
+    let button = document.querySelector("#allActivities")
+    let allActivityList = document.querySelector("#allActivitiesList")
+    button.addEventListener("click", () =>{
+        event.preventDefault()
+        if (allActivityDisplay) {
+            allActivityList.style.display = "none"
+            allActivityDisplay = false
+        } else {
+            allActivityList.style.display = "block"
+            allActivityDisplay = true
+        }
+    })
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     let long; 
     let lat; 
@@ -106,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
     }
     setNewActivityButton()
+    setAllActivityButton()
 })
 
 
