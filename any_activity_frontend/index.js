@@ -129,6 +129,15 @@ function listActivities() {
         .then(json => json.forEach(activity => createActivity(activity)))
 }
 
+function setSubmitActivityButton() {
+    let button = document.querySelector('#activitySubmit')
+    button.addEventListener("click", () => {
+        event.preventDefault()
+        let eventName = document.forms["activityForm"]["aname"].value
+        console.log(eventName)
+    })
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     let long; 
     let lat; 
@@ -151,6 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setNewActivityButton()
     setAllActivityButton()
+    setSubmitActivityButton()
 })
 
 
