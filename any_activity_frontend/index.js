@@ -63,8 +63,8 @@ class Weather {
 }
 
 class Activity {
-    constructor(json) {
-        this.name = json['name']
+    constructor(name) {
+        this.name = name
     }
 
     addToList() {
@@ -72,6 +72,29 @@ class Activity {
         let item = document.createElement('li')
         item.innerHTML = this.name
         list.appendChild(item)
+    }
+
+    postActivity() {
+        let configObj = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(this.formData)
+        }
+
+        fetch(BASE_URL + '/activities', configObj)
+            .then(response => response.json())
+            .then(json => console.log(json))
+            .catch(error => {
+                console.log(error.message)
+                alert("Failed to post to server, check console for error")
+            })
+    }
+
+    get formData() {
+        return {name: this.name}
     }
 }
 
@@ -118,7 +141,7 @@ function setAllActivityButton() {
 }
 
 function createActivity(activity) {
-    let newActivity = new Activity(activity)
+    let newActivity = new Activity(activity["name"])
     allActivites.push(newActivity)
     newActivity.addToList()
 }
@@ -133,8 +156,9 @@ function setSubmitActivityButton() {
     let button = document.querySelector('#activitySubmit')
     button.addEventListener("click", () => {
         event.preventDefault()
-        let eventName = document.forms["activityForm"]["aname"].value
-        console.log(eventName)
+        let newActivity = new Activity(document.forms["activityForm"]["aname"].value)
+        newActivity.addToList()
+        newActivity.postActivity()
     })
 }
 
