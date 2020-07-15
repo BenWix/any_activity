@@ -5,7 +5,7 @@ class Weather {
     constructor(json) {
         this._temp = json['main']['temp']
         this.location = json['name']
-        this.condition = json['weather']['0']['description']
+        this._condition = json['weather']['0']['description']
         this.icon = json['weather']['icon']
         this.degrees = "F"
     }
@@ -17,19 +17,10 @@ class Weather {
         weatherBlurb.classList.add('weather')
         weatherBlurb.innerHTML = `
             <h3>Right now in \n${this.location}\nit is </h3>
-            <h3>${this.condition} & ${this.get_temp()}&#176; ${this.degrees} </h3>
+            <h3>${this.condition()} & ${this.get_temp()}&#176; ${this.degrees} </h3>
         `;
 
         weatherHeader.appendChild(weatherBlurb)
-
-        // let intro = document.createElement("p")
-        // intro.classList.add("intro")
-        // intro.innerHTML
-        // let temperature = document.createElement("p")
-        // temperature.classList.add("temperature")
-        // temperature.innerHTML = this.get_temp() + this.degrees
-        // weatherHeader.appendChild(temperature)
-        // console.log('Weather has been set')
     }
     
     get_temp() {
@@ -43,6 +34,30 @@ class Weather {
             temp = rawTemp - 273.15
         }
         return Math.round(temp)
+    }
+
+    condition() {
+        let answer
+        switch(this._condition){
+            case "clear":
+                answer = "clear"
+                break;
+            case "few clouds":
+            case "scattered clouds":
+            case "broken clouds": 
+                answer = "cloudy"
+                break;
+            case "shower rain":
+            case "rain":
+                answer = "raining"
+                break;
+            case "thunderstorm":
+                answer = "storming"
+                break;
+            default: 
+                answer = this._condition + "ing"
+        }
+        return answer
     }
 }
 
