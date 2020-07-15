@@ -74,8 +74,6 @@ class Weather {
 
 }
 
-
-
 class Activity {
     constructor(name) {
         this.name = name
@@ -110,8 +108,19 @@ class Activity {
     get formData() {
         return {name: this.name}
     }
+    
+    static createActivity(activity) {
+        let newActivity = new Activity(activity["name"])
+        allActivites.push(newActivity)
+        newActivity.addToList()
+    }
+    
+    static listActivities() {
+        fetch(BASE_URL + '/activities')
+            .then(response => response.json())
+            .then(json => json.forEach(activity => Activity.createActivity(activity)))
+    }
 }
-
 
 function setNewActivityButton() {
     let button = document.querySelector("#addActivity")
@@ -143,18 +152,6 @@ function setAllActivityButton() {
     })
 }
 
-function createActivity(activity) {
-    let newActivity = new Activity(activity["name"])
-    allActivites.push(newActivity)
-    newActivity.addToList()
-}
-
-function listActivities() {
-    fetch(BASE_URL + '/activities')
-        .then(response => response.json())
-        .then(json => json.forEach(activity => createActivity(activity)))
-}
-
 function setSubmitActivityButton() {
     let button = document.querySelector('#activitySubmit')
     button.addEventListener("click", () => {
@@ -169,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let long; 
     let lat; 
     allActivites =[]
-    listActivities()
+    Activity.listActivities()
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
             long = position.coords.longitude.toString(10).replace('.','x')
