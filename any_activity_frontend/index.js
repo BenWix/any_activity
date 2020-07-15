@@ -2,6 +2,7 @@ const BASE_URL = "http://localhost:3000"
 let currentWeather
 let newActivityDisplay = false
 let allActivityDisplay = false
+let allActivites 
 
 class Weather {
     constructor(json) {
@@ -61,6 +62,19 @@ class Weather {
     }
 }
 
+class Activity {
+    constructor(json) {
+        this.name = json['name']
+    }
+
+    addToList() {
+        let list = document.querySelector(".activityList")
+        let item = document.createElement('li')
+        item.innerHTML = this.name
+        list.appendChild(item)
+    }
+}
+
 function getWeather(lat, long) {
     let weatherURL = BASE_URL + `/weather/${lat}/${long}`
     fetch(weatherURL)
@@ -103,9 +117,23 @@ function setAllActivityButton() {
     })
 }
 
+function createActivity(activity) {
+    let newActivity = new Activity(activity)
+    allActivites.push(newActivity)
+    newActivity.addToList()
+}
+
+function listActivities() {
+    fetch(BASE_URL + '/activities')
+        .then(response => response.json())
+        .then(json => json.forEach(activity => createActivity(activity)))
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     let long; 
     let lat; 
+    allActivites =[]
+    listActivities()
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
             long = position.coords.longitude.toString(10).replace('.','x')
