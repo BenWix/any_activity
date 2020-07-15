@@ -1,31 +1,42 @@
 const BASE_URL = "http://localhost:3000"
-// let degrees = "F"
 let currentWeather
 
 class Weather {
     constructor(json) {
         this._temp = json['main']['temp']
         this.location = json['name']
-        this.condition = json['weather']['description']
+        this.condition = json['weather']['0']['description']
         this.icon = json['weather']['icon']
         this.degrees = "F"
     }
 
     
     setWeather() {
-        let weatherHeader = document.querySelector('.weather')
-        let temperature = document.createElement("p")
-        temperature.classList.add("temperature")
-        temperature.innerHTML = this.get_temp() + this.degrees
-        weatherHeader.appendChild(temperature)
-        console.log('Weather has been set')
+        let weatherHeader = document.querySelector('.main')
+        let weatherBlurb = document.createElement('div')
+        weatherBlurb.classList.add('weather')
+        weatherBlurb.innerHTML = `
+            <h3>Right now in \n${this.location}\nit is </h3>
+            <h3>${this.condition} & ${this.get_temp()}&#176; ${this.degrees} </h3>
+        `;
+
+        weatherHeader.appendChild(weatherBlurb)
+
+        // let intro = document.createElement("p")
+        // intro.classList.add("intro")
+        // intro.innerHTML
+        // let temperature = document.createElement("p")
+        // temperature.classList.add("temperature")
+        // temperature.innerHTML = this.get_temp() + this.degrees
+        // weatherHeader.appendChild(temperature)
+        // console.log('Weather has been set')
     }
     
     get_temp() {
         let rawTemp = this._temp
         let temp
-        //Temperature from API is in KELVIN
-        //Converts based on preference of fahrenheit or celsius
+        //Temperature from API is in Kelvin
+        //Converts based on preference of Fahrenheit or Celsius
         if (this.degrees === "F") {
             temp = (rawTemp - 273.15) * 9/5 + 32
         } else {
@@ -45,6 +56,7 @@ function getWeather(lat, long) {
             currentWeather.setWeather()
         })
 }
+
 document.addEventListener("DOMContentLoaded", () => {
     let long; 
     let lat; 
