@@ -1,6 +1,15 @@
 const BASE_URL = "http://localhost:3000"
 let degrees = "F"
 
+class Weather {
+    constructor(temp, location, condition, icon) {
+        this.temp = temp
+        this.location = location
+        this.condition = condition
+        this.icon = icon
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     let long; 
     let lat; 
@@ -20,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 function setWeather(json) {
+    
     let weatherHeader = document.querySelector('.weather')
     let temperature = document.createElement("li")
     temperature.classList.add("temperature")
