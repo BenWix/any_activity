@@ -129,6 +129,15 @@ class Activity {
     }
 }
 
+function setRandomButton() {
+    let button = document.querySelector("#randomActivity")
+    button.addEventListener("click", () => {
+        event.preventDefault()
+        let activity = Activity.suggestActivity(currentWeather.condition, currentWeather.temperature)
+        document.querySelector('.suggestion').innerHTML = activity
+    })
+}
+
 function setNewActivityButton() {
     let button = document.querySelector("#addActivity")
     let newActivityForm = document.querySelector("#newActivity")
@@ -194,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
               Weather.getWeather(lat,long)
           }
       })
-    
+    setRandomButton()
     setNewActivityButton()
     setAllActivityButton()
     setSubmitActivityButton()
