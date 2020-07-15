@@ -12,15 +12,13 @@ class Weather {
 
     
     setWeather() {
-        let weatherHeader = document.querySelector('.main')
-        let weatherBlurb = document.createElement('div')
-        weatherBlurb.classList.add('weather')
+        let weatherBlurb = document.querySelector('.weather')
+
         weatherBlurb.innerHTML = `
             <h3>Right now in \n${this.location}\nit is </h3>
             <h3>${this.condition()} & ${this.get_temp()}&#176; ${this.degrees} </h3>
         `;
 
-        weatherHeader.appendChild(weatherBlurb)
     }
     
     get_temp() {
