@@ -1,5 +1,6 @@
 const BASE_URL = "http://localhost:3000"
 let currentWeather
+let newActivityDisplay = false
 
 class Weather {
     constructor(json) {
@@ -65,9 +66,25 @@ function getWeather(lat, long) {
         .then(response => response.json())
         .then(json => {
             console.log('Weather has been retrieved')
+            console.log(json)
             currentWeather = new Weather(json)
             currentWeather.setWeather()
         })
+}
+
+function setNewActivityButton() {
+    let button = document.querySelector("#addActivity")
+    let newActivityForm = document.querySelector("#newActivity")
+    button.addEventListener("click", () =>{
+        event.preventDefault()
+        if (newActivityDisplay) {
+            newActivityForm.style.display = "none"
+            newActivityDisplay = false
+        } else {
+            newActivityForm.style.display = "block"
+            newActivityDisplay = true
+        }
+    })
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -85,9 +102,10 @@ document.addEventListener("DOMContentLoaded", () => {
         long = 40.7128
         lat = -74.0060
         console.log(`${lat}, ${long}`)
-
         getWeather(lat,long)
+        
     }
+    setNewActivityButton()
 })
 
 

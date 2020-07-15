@@ -2,10 +2,32 @@
 <html lang = "en" dir="ltr">
     <head>
         <title>AnyActivity</title>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
         <h1>Welcome to AnyActivity</h1>
-        <div class="weather"><div>
+        <div class="weather"></div>
+        <button id="addActivity">Add Activity</button>
+        <button id="allActivities">See All Activities</button>
+
+        <div class="form-popup" id="newActivity">
+            <form >
+              <h1>Add New Activity</h1>
+          
+              <label for="activityName"><b>Activity Name</b></label>
+              <input type="text" placeholder="Enter Name of Activity" name="email">
+          
+              <label for="conditions"><b>Conditions</b></label>
+              <input type="text" placeholder="Condition" name="condition" required>
+          
+              <button type="submit" class="submitButton">Submit</button>
+            </form>
+          </div>
+        <div class="form-popup" id="allActivities">
+            <ul class="activityList">
+                <li>This is a test</li>
+            </ul>
+        </div>
         
         <script src="./index.js"></script>
     </body>
