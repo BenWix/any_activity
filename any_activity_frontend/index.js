@@ -12,19 +12,17 @@ class Weather {
         this.icon = json['weather']['icon']
         this.degrees = "F"
     }
-
     
     setWeather() {
         let weatherBlurb = document.querySelector('.weather')
 
         weatherBlurb.innerHTML = `
             <h3>Right now in \n${this.location}\nit is </h3>
-            <h3>${this.condition()} & ${this.get_temp()}&#176; ${this.degrees} </h3>
+            <h3>${this.condition} & ${this.temp}&#176; ${this.degrees} </h3>
         `;
-
     }
     
-    get_temp() {
+    get temp() {
         let rawTemp = this._temp
         let temp
         //Temperature from API is in Kelvin
@@ -37,7 +35,7 @@ class Weather {
         return Math.round(temp)
     }
 
-    condition() {
+    get condition() {
         let answer
         switch(this._condition){
             case "clear":
@@ -46,8 +44,8 @@ class Weather {
             case "few clouds":
             case "scattered clouds":
             case "broken clouds": 
-                answer = "cloudy"
-                break;
+            answer = "cloudy"
+            break;
             case "shower rain":
             case "rain":
                 answer = "raining"
@@ -60,7 +58,23 @@ class Weather {
         }
         return answer
     }
+
+    static getWeather(lat, long) {
+        let weatherURL = BASE_URL + `/weather/${lat}/${long}`
+        console.log(weatherURL)
+        fetch(weatherURL)
+            .then(response => response.json())
+            .then(json => {
+                console.log('Weather has been retrieved')
+                console.log(json)
+                currentWeather = new Weather(json)
+                currentWeather.setWeather()
+            })
+    }
+
 }
+
+
 
 class Activity {
     constructor(name) {
@@ -73,7 +87,7 @@ class Activity {
         item.innerHTML = this.name
         list.appendChild(item)
     }
-
+    
     postActivity() {
         let configObj = {
             method: "POST",
@@ -83,32 +97,21 @@ class Activity {
             },
             body: JSON.stringify(this.formData)
         }
-
+        
         fetch(BASE_URL + '/activities', configObj)
-            .then(response => response.json())
-            .then(json => console.log(json))
-            .catch(error => {
-                console.log(error.message)
-                alert("Failed to post to server, check console for error")
-            })
+        .then(response => response.json())
+        .then(json => console.log(json))
+        .catch(error => {
+            console.log(error.message)
+            alert("Failed to post to server, check console for error")
+        })
     }
-
+    
     get formData() {
         return {name: this.name}
     }
 }
 
-function getWeather(lat, long) {
-    let weatherURL = BASE_URL + `/weather/${lat}/${long}`
-    fetch(weatherURL)
-        .then(response => response.json())
-        .then(json => {
-            console.log('Weather has been retrieved')
-            console.log(json)
-            currentWeather = new Weather(json)
-            currentWeather.setWeather()
-        })
-}
 
 function setNewActivityButton() {
     let button = document.querySelector("#addActivity")
@@ -172,14 +175,14 @@ document.addEventListener("DOMContentLoaded", () => {
             long = position.coords.longitude.toString(10).replace('.','x')
             lat = position.coords.latitude.toString(10).replace('.','x')
             console.log(`${lat}, ${long}`)
-            getWeather(lat,long)
+            Weather.getWeather(lat,long)
         })
     } else {
         console.log("Unable to determine location, using default of New York City")
         long = 40.7128
         lat = -74.0060
         console.log(`${lat}, ${long}`)
-        getWeather(lat,long)
+        Weather.getWeather(lat,long)
         
     }
     setNewActivityButton()
