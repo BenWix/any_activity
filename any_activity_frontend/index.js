@@ -174,21 +174,27 @@ document.addEventListener("DOMContentLoaded", () => {
     let lat; 
     allActivites =[]
     Activity.listActivities()
-    if (navigator.geolocation) {
+    new Promise((resolve, reject) => {
+
         navigator.geolocation.getCurrentPosition(position => {
             long = position.coords.longitude.toString(10).replace('.','x')
             lat = position.coords.latitude.toString(10).replace('.','x')
             console.log(`${lat}, ${long}`)
             Weather.getWeather(lat,long)
+            
         })
-    } else {
-        console.log("Unable to determine location, using default of New York City")
-        long = 40.7128
-        lat = -74.0060
-        console.log(`${lat}, ${long}`)
-        Weather.getWeather(lat,long)
-        
-    }
+        resolve(1)
+    }).then((data) => {
+      
+          if (!lat) {
+              console.log("Unable to determine location, using default of New York City")
+                  lat = '40x7128'
+                  long = '-74x0060'
+              console.log(`${lat}, ${long}`)
+              Weather.getWeather(lat,long)
+          }
+      })
+    
     setNewActivityButton()
     setAllActivityButton()
     setSubmitActivityButton()
