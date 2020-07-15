@@ -19,6 +19,8 @@ class Weather {
         weatherBlurb.innerHTML = `
             <h3>Right now in \n${this.location}\nit is </h3>
             <h3>${this.condition} & ${this.temp}&#176; ${this.degrees} </h3>
+            <h3>you could</h3>
+            <h3 class='suggestion'>${Activity.suggestActivity(this.condition, this.temp)}</h3>
         `;
     }
     
@@ -44,8 +46,9 @@ class Weather {
             case "few clouds":
             case "scattered clouds":
             case "broken clouds": 
-            answer = "cloudy"
-            break;
+            case "overcast clouds":
+                answer = "cloudy"
+                break;
             case "shower rain":
             case "rain":
                 answer = "raining"
@@ -119,6 +122,10 @@ class Activity {
         fetch(BASE_URL + '/activities')
             .then(response => response.json())
             .then(json => json.forEach(activity => Activity.createActivity(activity)))
+    }
+
+    static suggestActivity(condition, temperature) {
+        return allActivites[Math.floor(Math.random() * allActivites.length)].name
     }
 }
 
