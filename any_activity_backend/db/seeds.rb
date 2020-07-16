@@ -9,6 +9,13 @@ Condition.delete_all
 Activity.delete_all
 
 read = Activity.create(name: "read a book")
+read.conditions.create(weather: "rainy", min_temp: -100, max_temp: 100)
+
 run = Activity.create(name: "go for a run")
+run.conditions.create(weather: "clear", min_temp: 50, max_temp: 90)
+
 nap = Activity.create(name: "take a nap")
+nap.conditions.create(weather: "cloudy", min_temp: -100, max_temp: 100)
+
 sledding = Activity.create(name: "go sledding")
+sledding.conditions.create(weather: "snowing", min_temp: 0, max_temp: 30)
