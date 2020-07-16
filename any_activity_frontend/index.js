@@ -102,7 +102,7 @@ class Activity {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify(Activity.formData)
+            body: JSON.stringify(Activity.formData())
         }
         
         fetch(BASE_URL + '/activities', configObj)
@@ -118,6 +118,14 @@ class Activity {
         let name = document.forms["activityForm"]["aname"].value
         
         let conditions = []
+        let conditionsForms = document.querySelectorAll('.conditionsForm')
+        conditionsForms.forEach(form => {
+            let newCondition = {}
+            newCondition["weather"] = form.children[1].value
+            newCondition["min_temp"] = form.children[3].value
+            newCondition["max_temp"] = form.children[5].value
+            conditions.push(newCondition)
+        })
         //Create conditions array here
         return {name: name, conditions: conditions}
     }

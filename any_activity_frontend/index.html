@@ -17,7 +17,25 @@
           
               <label for="activityName"><b>Activity Name</b></label>
               <input type="text" placeholder="Enter Name of Activity" name="aname">
-                <div id="conditionsForm">
+                <div class="conditionsForm">
+                    <label>Weather Condition</label>
+                    <select name="condition" id="condition-dropdown">
+                        <option value="any">Any Condition</option>
+                        <option value="clear">Clear</option>
+                        <option value="cloudy">Cloudy</option>
+                        <option value="raining">Raining</option>
+                        <option value="storming">Storming</option>
+                        <option value="misting">Misting</option>
+                        <option value="snowing">Snowing</option>
+                    </select>
+
+                    <label>Min Temp</label>
+                    <input type="number" name="minTemp">
+                    
+                    <label>Max Temp</label>
+                    <input type="number" name="maxTemp">
+                </div>
+                <div class="conditionsForm">
                     <label>Weather Condition</label>
                     <select name="condition" id="condition-dropdown">
                         <option value="any">Any Condition</option>
@@ -38,7 +56,8 @@
               <!-- <label for="conditions"><b>Conditions</b></label>
               <input type="text" placeholder="Condition" name="condition" required>
            -->
-              <button id="activitySubmit">Submit</button>
+                <button id="moreConditions">Add Another Condition</button>
+                <button id="activitySubmit">Submit</button>
             </form>
           </div>
         <div class="form-popup" id="allActivitiesList">
