@@ -80,6 +80,7 @@ class Weather {
 class Activity {
     constructor(name) {
         this.name = name
+        this.conditions = []
     }
 
     addToList() {
@@ -129,6 +130,29 @@ class Activity {
     }
 }
 
+class Condition {
+    constructor(weather, minTemp, maxTemp) {
+        this.weather = weather
+        this.minTemp = minTemp
+        this.maxTemp = maxTemp
+    }
+}
+
+
+function setSubmitActivityButton() {
+    let button = document.querySelector('#activitySubmit')
+    button.addEventListener("click", () => {
+        event.preventDefault()
+        let conditions = []
+        let oneCondition = {}
+        oneConditions["type"] = document.forms["activityForm"]["condition"].value
+        oneConditions["minTemp"] = document.forms["activityForm"]["minTemp"].value
+        oneConditions["maxTemp"] = document.forms["activityForm"]["maxTemp"].value
+        conditions.push(oneCondition)
+        Activity.upload(document.forms["activityForm"]["aname"].value, conditions)
+    })
+}
+
 function setRandomButton() {
     let button = document.querySelector("#randomActivity")
     button.addEventListener("click", () => {
@@ -168,15 +192,6 @@ function setAllActivityButton() {
     })
 }
 
-function setSubmitActivityButton() {
-    let button = document.querySelector('#activitySubmit')
-    button.addEventListener("click", () => {
-        event.preventDefault()
-        let newActivity = new Activity(document.forms["activityForm"]["aname"].value)
-        newActivity.addToList()
-        newActivity.postActivity()
-    })
-}
 
 document.addEventListener("DOMContentLoaded", () => {
     let long; 
