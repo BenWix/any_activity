@@ -83,6 +83,11 @@ class Activity {
         this.conditions = []
     }
 
+    setCondition(condition) {
+        let newCondition = new Condition(condition["weather"], condition["min_temp"], condition["max_temp"])
+        this.conditions.push(newCondition)
+    }
+
     addToList() {
         let list = document.querySelector(".activityList")
         let item = document.createElement('li')
@@ -90,14 +95,14 @@ class Activity {
         list.appendChild(item)
     }
     
-    postActivity() {
+    static postActivity() {
         let configObj = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify(this.formData)
+            body: JSON.stringify(Activity.formData)
         }
         
         fetch(BASE_URL + '/activities', configObj)
@@ -109,12 +114,17 @@ class Activity {
         })
     }
     
-    get formData() {
-        return {name: this.name}
+    static formData() {
+        let name = document.forms["activityForm"]["aname"].value
+        
+        let conditions = []
+        //Create conditions array here
+        return {name: name, conditions: conditions}
     }
     
     static createActivity(activity) {
         let newActivity = new Activity(activity["name"])
+        activity["conditions"].forEach(con => newActivity.setCondition(con))
         allActivites.push(newActivity)
         newActivity.addToList()
     }
@@ -143,13 +153,14 @@ function setSubmitActivityButton() {
     let button = document.querySelector('#activitySubmit')
     button.addEventListener("click", () => {
         event.preventDefault()
-        let conditions = []
-        let oneCondition = {}
-        oneConditions["type"] = document.forms["activityForm"]["condition"].value
-        oneConditions["minTemp"] = document.forms["activityForm"]["minTemp"].value
-        oneConditions["maxTemp"] = document.forms["activityForm"]["maxTemp"].value
-        conditions.push(oneCondition)
-        Activity.upload(document.forms["activityForm"]["aname"].value, conditions)
+        Activity.postActivity()
+        // let conditions = []
+        // let oneCondition = {}
+        // oneConditions["type"] = document.forms["activityForm"]["condition"].value
+        // oneConditions["minTemp"] = document.forms["activityForm"]["minTemp"].value
+        // oneConditions["maxTemp"] = document.forms["activityForm"]["maxTemp"].value
+        // conditions.push(oneCondition)
+        // Activity.upload(document.forms["activityForm"]["aname"].value, conditions)
     })
 }
 
