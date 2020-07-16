@@ -3,12 +3,13 @@ class ActivitiesController < ApplicationController
 
     def index 
         activities = Activity.all
-        render json: activities
+        render json: activities, include: [:conditions]
     end
     
     def create
+        binding.pry
         activity = Activity.create(name: params[:name])
-        render json: activity
+        render json: activity, include: [:conditions]
     end
 
 end
