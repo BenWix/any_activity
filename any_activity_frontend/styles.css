@@ -40,6 +40,12 @@ button:hover {
     }
 }
 
+h3.welcome {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+}
+
 
 .form-popup {
     display: none;
