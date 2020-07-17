@@ -211,6 +211,34 @@ function setAllActivityButton() {
     })
 }
 
+function addConditionsButton() {
+    document.querySelector('#moreConditions').addEventListener('click', () => {
+        event.preventDefault()
+        let conditionsArea = document.querySelector('conditionsArea')
+        let newForm = document.createElement('div')
+        newForm.classList.add('conditionsForm')
+        newForm.innerHTML = `
+        <label>Weather Condition</label>
+        <select name="condition" id="condition-dropdown">
+        <option value="any">Any Condition</option>
+        <option value="clear">Clear</option>
+        <option value="cloudy">Cloudy</option>
+        <option value="raining">Raining</option>
+        <option value="storming">Storming</option>
+        <option value="misting">Misting</option>
+        <option value="snowing">Snowing</option>
+        </select>
+        
+        <label>Min Temp</label>
+        <input type="number" name="minTemp">
+        
+        <label>Max Temp</label>
+        <input type="number" name="maxTemp">
+        `
+        conditionsArea.appendChild(newForm)
+    })
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
     let long; 
@@ -241,6 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setNewActivityButton()
     setAllActivityButton()
     setSubmitActivityButton()
+    addConditionsButton()
 })
 
 
