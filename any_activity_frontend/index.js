@@ -120,7 +120,7 @@ class Activity {
         
         fetch(BASE_URL + '/activities', configObj)
         .then(response => response.json())
-        .then(json => console.log(json))
+        .then(json => Activity.createActivity(json))
         .catch(error => {
             console.log(error.message)
             alert("Failed to post to server, check console for error")

@@ -7,11 +7,11 @@ class ActivitiesController < ApplicationController
     end
     
     def create
-        binding.pry
         activity = Activity.create(name: params[:name])
         params[:conditions].each do |cond|  
             activity.conditions.create(weather: cond["weather"], min_temp: cond["min_temp"], max_temp: cond["max_temp"])
         end
+        # binding.pry
         render json: activity, include: [:conditions]
     end
 end
