@@ -40,5 +40,5 @@ watch.conditions.create(weather: "storming", min_temp: -100, max_temp: 100)
 swimming = Activity.create(name: "go for a swim")
 swimming.conditions.create(weather: "clear", min_temp: 50, max_temp: 100)
 
-yoga = Activity.create(name: "do some yogay")
+yoga = Activity.create(name: "do some yoga")
 yoga.conditions.create(weather: "any", max_temp: 100, min_temp:-100)
