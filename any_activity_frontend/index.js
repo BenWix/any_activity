@@ -20,8 +20,9 @@ class Weather {
             <h3>Right now in \n${this.location}\nit is </h3>
             <h3>${this.condition} & ${this.temp}&#176; ${this.degrees} </h3>
             <h3>you could</h3>
-            <h3 class='suggestion'>${Activity.suggestActivity(this.condition, this.temp)}</h3>
+            <h3 class='suggestion'></h3>
         `;
+        Activity.suggestActivity()
     }
     
     get temp() {
@@ -94,6 +95,12 @@ class Activity {
         item.innerHTML = this.name
         list.appendChild(item)
     }
+
+    weatherValid(condition, temperature) {
+        console.log(this.name) 
+        this.conditions.forEach(con => console.log(con['weather']))
+        return true
+    }
     
     static postActivity() {
         let configObj = {
@@ -144,7 +151,15 @@ class Activity {
     }
 
     static suggestActivity(condition, temperature) {
-        return allActivites[Math.floor(Math.random() * allActivites.length)].name
+        let possibleActivities = []
+        for (let i=0; i < allActivites.length; i++){
+            let act = allActivites[i]
+            if (act.weatherValid(condition, temperature)) {
+                possibleActivities.push(act)
+            }
+        }
+        let activity = possibleActivities[Math.floor(Math.random() * possibleActivities.length)].name
+        document.querySelector('.suggestion').innerHTML = activity
     }
 }
 
@@ -162,13 +177,6 @@ function setSubmitActivityButton() {
     button.addEventListener("click", () => {
         event.preventDefault()
         Activity.postActivity()
-        // let conditions = []
-        // let oneCondition = {}
-        // oneConditions["type"] = document.forms["activityForm"]["condition"].value
-        // oneConditions["minTemp"] = document.forms["activityForm"]["minTemp"].value
-        // oneConditions["maxTemp"] = document.forms["activityForm"]["maxTemp"].value
-        // conditions.push(oneCondition)
-        // Activity.upload(document.forms["activityForm"]["aname"].value, conditions)
     })
 }
 
@@ -176,8 +184,7 @@ function setRandomButton() {
     let button = document.querySelector("#randomActivity")
     button.addEventListener("click", () => {
         event.preventDefault()
-        let activity = Activity.suggestActivity(currentWeather.condition, currentWeather.temperature)
-        document.querySelector('.suggestion').innerHTML = activity
+        Activity.suggestActivity()
     })
 }
 
@@ -252,7 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
             lat = position.coords.latitude.toString(10).replace('.','x')
             console.log(`${lat}, ${long}`)
             Weather.getWeather(lat,long)
-            
         })
         resolve(1)
     }).then((data) => {
