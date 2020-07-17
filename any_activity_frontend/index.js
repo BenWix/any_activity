@@ -96,12 +96,12 @@ class Activity {
         list.appendChild(item)
     }
 
-    weatherValid(condition, temperature) {
+    weatherValid() {
         let value = false
-        console.log(this.name) 
+        // console.log(this.name) 
         this.conditions.forEach(con => {
-            console.log(con['weather'])
-            if (con.weather === condition && con.minTemp <= temperature && con.maxTemp >= temperature) {
+            // console.log(con['weather'])
+            if ((con.weather === currentWeather.condition  || con.weather === 'any') && con.minTemp <= currentWeather.temp && con.maxTemp >= currentWeather.temp) {
                 value = true
             }
         })
@@ -156,12 +156,12 @@ class Activity {
             .then(json => json.forEach(activity => Activity.createActivity(activity)))
     }
 
-    static suggestActivity(condition, temperature) {
+    static suggestActivity() {
         let name
         let possibleActivities = []
         for (let i=0; i < allActivites.length; i++){
             let act = allActivites[i]
-            if (act.weatherValid(condition, temperature)) {
+            if (act.weatherValid()) {
                 possibleActivities.push(act)
             }
         }
@@ -171,7 +171,7 @@ class Activity {
         } else {
             name = "Suggest a New Activity"
         }
-        document.querySelector('.suggestion').innerHTML = activity
+        document.querySelector('.suggestion').innerHTML = name
     }
 }
 
