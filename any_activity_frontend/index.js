@@ -214,7 +214,7 @@ function setAllActivityButton() {
 function addConditionsButton() {
     document.querySelector('#moreConditions').addEventListener('click', () => {
         event.preventDefault()
-        let conditionsArea = document.querySelector('conditionsArea')
+        let conditionsArea = document.querySelector('.conditionsArea')
         let newForm = document.createElement('div')
         newForm.classList.add('conditionsForm')
         newForm.innerHTML = `
