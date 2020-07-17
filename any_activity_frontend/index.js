@@ -135,10 +135,11 @@ class Activity {
         conditionsForms.forEach(form => {
             let newCondition = {}
             newCondition["weather"] = form.children[1].value
-            newCondition["min_temp"] = form.children[3].value
-            newCondition["max_temp"] = form.children[5].value
+            newCondition["min_temp"] = form.children[3].value ? form.children[3].value : -100
+            newCondition["max_temp"] = form.children[5].value ? form.children[5].value : 200
             conditions.push(newCondition)
         })
+        document.querySelector('#activityForm').reset()
         //Create conditions array here
         return {name: name, conditions: conditions}
     }
