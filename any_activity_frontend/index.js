@@ -97,9 +97,15 @@ class Activity {
     }
 
     weatherValid(condition, temperature) {
+        let value = false
         console.log(this.name) 
-        this.conditions.forEach(con => console.log(con['weather']))
-        return true
+        this.conditions.forEach(con => {
+            console.log(con['weather'])
+            if (con.weather === condition && con.minTemp <= temperature && con.maxTemp >= temperature) {
+                value = true
+            }
+        })
+        return value
     }
     
     static postActivity() {
@@ -151,6 +157,7 @@ class Activity {
     }
 
     static suggestActivity(condition, temperature) {
+        let name
         let possibleActivities = []
         for (let i=0; i < allActivites.length; i++){
             let act = allActivites[i]
@@ -158,7 +165,12 @@ class Activity {
                 possibleActivities.push(act)
             }
         }
-        let activity = possibleActivities[Math.floor(Math.random() * possibleActivities.length)].name
+        let activity = possibleActivities[Math.floor(Math.random() * possibleActivities.length)]
+        if (activity) {
+            name = activity.name
+        } else {
+            name = "Suggest a New Activity"
+        }
         document.querySelector('.suggestion').innerHTML = activity
     }
 }
