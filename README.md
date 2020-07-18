@@ -4,7 +4,7 @@ currently sunny and 90 degrees outside, anyActivity could suggest you go for a s
 AnyActivity is already seeded with several suggestions for different weather conditions, but more can 
 be added by any user of the application. 
 
-![Image of homescreen](https://imgur.com/c6kuHDd)
+![Image of homescreen](https://i.imgur.com/c6kuHDd.jpg)
 
 The weather data comes from the Open Weather Api and the activities submitted by users is stored on a 
 rails back end. The front end is vanilla javascript. In order to use the application, after the repo is 
